@@ -2,13 +2,13 @@
 # uses this file as the main entry point of the application.
 
 import jester, asyncdispatch
-import discover3dpkg/[datafuncs]
+import discoverassetspkg/[datafuncs]
 from md5 import toMD5, `$`
 from times import now, seconds, `+`, hours, utc
 from strutils import parseInt, escape, unescape, removePrefix, removeSuffix, strip, format
 from sequtils import concat, filterIt
 from httpclient import newHttpClient, getContent
-include "discover3dpkg/views.tmpl"
+include "discoverassetspkg/views.tmpl"
 
 proc getinfo(name, query, num : string, url : tuple[d3 : URL, d2 : URL]) : Future[string] {.async.} =
     try:
