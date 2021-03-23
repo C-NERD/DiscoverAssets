@@ -18,7 +18,11 @@ proc moveToBin() =
     mkDir("bin")
     cpDir("public", "bin/public")
     cpFile("database.db", "bin/database.db")
-    mvFile "discoverassets", "bin/discoverassets"
+
+    if defined(Linux):
+        mvFile "discoverassets", "bin/discoverassets"
+    elif defined(Windows):
+        mvFile "discoverassets.exe", "bin/discoverassets.exe"
 
 proc moveExe() =
     # move executable to the project root directory
