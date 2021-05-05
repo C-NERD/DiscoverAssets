@@ -34,6 +34,10 @@ proc moveExe() =
     elif defined(Windows):
         mvFile "src/discoverassets.exe", "discoverassets.exe"
 
+task database, "compiles and runs the code to create a new database":
+    exec "nim c -r src/discoverassetspkg/database.nim"
+    rmFile "src/discoverassetspkg/database"
+
 task make, "compiles with thread":
     exec "nim c -d:ssl --threads:on src/discoverassets.nim"
     moveExe()
