@@ -18,13 +18,19 @@ proc newdatabase() =
         apiid int NOT NULL,
         siteid int NOT NULL REFERENCES site,
         link text,
+        link_tag text,
         icon text,
+        icon_tag text,
         dimension text,
         website text,
         asset_class text,
+        asset_tag text,
         name_class text,
+        name_tag text,
         img_class text,
+        img_tag text,
         assetlink_class text,
+        assetlink_tag text,
         PRIMARY KEY (apiid)
     );
     """)
