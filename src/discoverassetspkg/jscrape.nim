@@ -3,83 +3,12 @@
 # remove this file altogether. You may create additional modules alongside
 # this file as required.
 
+from datafuncs import Data, Api
 from htmlparser import parseHtml
-from strutils import replaceWord, toLowerAscii, `%`, strip, format, split, parseInt, contains, toLowerAscii, replace, removeSuffix, parseBool
-from sequtils import concat, filterIt, mapIt, anyIt
 import xmltree
 from karax/kajax import ajaxGet
 import karax/[kdom, vdom, karax]
-import asyncjs
 
-type
-    DATA* = object   
-        img : string
-        name : string
-        website : string
-        link : string
-        dimension : string
-
-    URL = object of RootObj
-        name : cstring
-        url : cstring
-
-    STATUS = ref object of URL
-        cond : bool
-
-var
-    count* : int
-    pos* : int = 1
-    condition* : bool = true
-    fluke : tuple[data : seq[DATA], count : int]
-
-proc getdimension*() : cstring {.importc.}
-
-proc getkeyword*() : cstring {.importc.}
-
-proc geturl*(): seq[URL] {.importc.}
-
-var 
-    url = geturl()
-    statuss : seq[STATUS]
-
-for item in url:
-    var stats : STATUS = STATUS(name : item.name, url : item.url, cond : true)
-    statuss.add(stats)
-
-proc constatus() =
-    var loadimg = getElementById("loadimg")
-    var cond : bool = true
-
-    if statuss.anyIt(it.cond == true):
-        cond = false
-
-    if cond == true:
-        loadimg.innerText = "Could not get Assets for the search $1".format([$getkeyword()])
-        loadimg.id = "loadtext"
-
-proc clean*() : tuple[youtube, twitter, mail, logo, notification : cstring, notify : bool] =
-        var youtube = getElementById("youtubelink")
-        var twitter = getElementById("twitterlink")
-        var mail = getElementById("maillink")
-        var logo = getElementById("logoname")
-        var notification = getElementById("notifyinfo")
-        var notify = getElementById("notifybool")
-
-        var parent = logo.parentNode
-
-        result.youtube = youtube.value
-        result.twitter = twitter.value
-        result.mail = mail.value
-        result.logo = logo.value
-        result.notification = notification.value
-        result.notify = ($notify.value).parseBool
-            
-        parent.removeChild(logo)
-        parent.removeChild(youtube)
-        parent.removeChild(twitter)
-        parent.removeChild(mail)
-        parent.removeChild(notification)
-        parent.removeChild(notify)
 
 proc parse3dexport(data : string, getcount : bool) : tuple[data : seq[DATA], count : int] =
     var xmldata = data.parseHtml()

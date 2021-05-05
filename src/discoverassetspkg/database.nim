@@ -9,8 +9,7 @@ proc newdatabase() =
     db.exec(sql"""
     CREATE TABLE IF NOT EXISTS site(
         id int NOT NULL,
-        logo blob,
-        PRIMARY KEY (id)
+        logo blob
     );
     """)
 
@@ -18,14 +17,15 @@ proc newdatabase() =
     CREATE TABLE IF NOT EXISTS api(
         apiid int NOT NULL,
         siteid int NOT NULL REFERENCES site,
+        link text,
         icon text,
         dimension text,
         website text,
-        link text,
         asset_class text,
         name_class text,
         img_class text,
-        assetlink_class text
+        assetlink_class text,
+        PRIMARY KEY (apiid)
     );
     """)
 
