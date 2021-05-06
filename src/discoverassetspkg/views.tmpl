@@ -10,97 +10,19 @@
         <link rel="stylesheet" type="text/css" href="${path}style.css">
         <meta charset = "utf-8">
         <title>$content.logo</title>
-
-        #if js == "main" or js == "home" and content.ads != "":
-            #for item in content.displayads:
-                $item
-            #end for
-        #end if
-
     </head>
     <body id = "body">
-        <input type="hidden" value = "${content.logo}" id="logoname">
-        <input type="hidden" value = "${content.youtube}" id="youtubelink">
-        <input type="hidden" value = "${content.twitter}" id="twitterlink">
-        <input type="hidden" value = "${content.mail}" id="maillink">
-        <input type="hidden" value = "${content.notification}" id="notifyinfo">
-        <input type="hidden" value = "${content.notify}" id="notifybool">
 
-        #if js == "admin":
-            <input type="hidden" value = "${content.searchpage}" id="searchnum">
-            <input type="hidden" value = "${content.mainpage}" id="mainnum">
-            <input type="hidden" value = "${content.policypage}" id="policynum">
-            <div class = "hide" id = "siteads">$content.ads</div>
-            <input type="hidden" value = "${content.policy}" id="policyinfo">
-
-        #elif js == "policy":
-            <input type="hidden" value = "${content.policy}" id="policyinfo">
-
-        #elif js == "error":
-            <p>This is not a drill you just caused an error. If the error seems like a bug please report to alayaa694@gmail.com. Thanks</p>
+        #if js == "error":
+            <p>You just caused an error. If the error seems like a bug,
+             please report to alayaa694@gmail.com. Thanks</p>
+        
+        #else:
+            <main id="ROOT"></main>
 
         #end elif
-        
-        #if js != "error":
-            <main id="ROOT"></main>
-        #end if
+
     </body>
-    #if js == "main":
-        <script type = "text/javascript">
-            function getdimension() {
-                #if content.d3 != "" and content.d2 != "":
-                    return 'both'
-
-                #elif content.d3 != "" and content.d2 == "":
-                    return "3D"
-
-                #elif content.d3 == "" and content.d2 != "":
-                    return "2D"
-
-                #end elif
-            }
-            function getkeyword() {
-                return "$content.keyword"
-            }
-            function geturl() {
-                var url = [];
-
-                #if content.d3 != "":
-                    var d3 = `$content.d3`;
-                    var d3url = JSON.parse(d3);
-                    url = d3url.info.concat(url);
-                #end if
-                
-                #if content.d2 != "":
-                    var d2 = `$content.d2`;
-                    var d2url = JSON.parse(d2);
-                    url = d2url.info.concat(url);
-                #end if
-
-                return url;
-            }
-        </script>
-
-    #elif js == "policy":
-        <script src="${path}frontend/markdown.js"></script>    
-
-    #elif js == "admin":
-        <script type = "text/javascript">
-            function setimage() {
-                var file = document.getElementById("polimg").files[0];
-                var note = document.getElementById("privacy")
-
-                if (file) {
-                    var reader = new FileReader();
-                    reader.readAsDataURL(file, "UTF-8");
-                    
-                    reader.onload = function () {
-                        note.value = note.value + "\n\n![image](link)".replace("link", reader.result)
-                    }
-                }
-            }
-        </script>
-    #end elif
     <script src="${path}frontend/${js}.js"></script>
 </html>
 #end proc
