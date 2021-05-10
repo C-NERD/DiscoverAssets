@@ -46,9 +46,9 @@ task makerelease, "compiles a release version of the code":
     exec "nim c -d:ssl -d:release --gc:orc --threads:on src/discoverassets.nim"
     moveExe()
     
-task admin, "compiles code for the admin page to js":
-    exec "nim js src/discoverassetspkg/admin.nim"
-    mvFile "src/discoverassetspkg/admin.js", "public/frontend/admin.js"
+task settings, "compiles code for the settings page to js":
+    exec "nim js src/discoverassetspkg/settings.nim"
+    mvFile "src/discoverassetspkg/settings.js", "public/frontend/settings.js"
     
 task home, "compiles code for the home page to js":
     exec "nim js src/discoverassetspkg/home.nim"
@@ -58,16 +58,11 @@ task main, "compiles code for the main page to js":
     exec "nim js src/discoverassetspkg/main.nim"
     mvFile "src/discoverassetspkg/main.js", "public/frontend/main.js"
     
-task policy, "compiles code for the policy page to js":
-    exec "nim js src/discoverassetspkg/policy.nim"
-    mvFile "src/discoverassetspkg/policy.js", "public/frontend/policy.js"
-    
 task standalone, "compiles a standalone deployable version of the code into a bin dir on the projects root dir":
     exec "nimble makerelease"
-    exec "nimble admin"
+    exec "nimble settings"
     exec "nimble home"
     exec "nimble main"
-    exec "nimble policy"
     
     if dirExists("bin"):
         rmDir("bin")
