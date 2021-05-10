@@ -1,333 +1,195 @@
-@font-face {
-    font-family: 'bickley_scriptplain';
-    src: url('font2/bickley_script_plain_regular-webfont.woff2') format('woff2'),
-         url('font2/bickley_script_plain_regular-webfont.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
+/*
+    Global Css code for the things all pages have in common
+*/
 
+:root{
+    --primary : #fefefe;
+    --secondary : #202020;
 }
 
-html, body{
+@media (prefers-color-scheme: dark){
+    :root{
+        --primary : #202020;
+        --secondary : #fefefe;
+    }
+}
+
+html, body, #ROOT, #main, #background, #content{
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.hide{
-    display: none;
+html{
+    background: var(--primary);
+    color: var(--secondary);
 }
 
-.red{
-    color: rgb(255, 66, 66);
-}
-
-.green{
-    color: rgb(67, 255, 67);
-}
-
-#ROOT, #models, #modelcon{
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    display: flex;
+#main, #background{
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
-#canvas{
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+#main{
+    color: var(--secondary);
 }
 
-#navbar, #nav{
-    width: 100%;
-    height: 110px;
+/*Css code for background*/
+
+#background{
     position: absolute;
-    top: 0;
-    left: 0;
-    border-bottom: 2px solid black;
+}
+
+.backgroundrow{
+    width: 90%;
+    height: 33%;
+}
+
+.colouredcircle{
+    background: linear-gradient(#b342ff, #dfaffffa);
+}
+
+#colouredcircle1, #colouredcircle3{
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    float: right;
+}
+
+#colouredcircle2{
+    width: 150px;
+    height: 150px;
+    border-radius: 80px;
+    float: left;
+}
+
+/*Navbar and Footbar Css code*/
+
+#nav, #foot{
+    width: 100%;
+    position: fixed;
     display: flex;
     align-items: center;
 }
 
 #nav{
-    position: fixed;
-    justify-content: space-between;
-    height: 240px;
-    background: #fefefe;
-}
-
-#siteads .add{
-    width: 100%;
-    height: 60px;
-    display: flex;
-    /*align-items: center;*/
-}
-
-#plus{
-    height: 50px;
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-left: 90%;
-    margin-bottom: 0;
-}
-
-#plus:active{
-    border: 1px solid black;
-}
-
-#plus div{
-    background: black;
-    width: 40px;
-    height: 2px;
-    margin-bottom: 0;
-}
-
-#line111{
-    transform: rotate(90deg) translate(10px, 0);
-}
-
-#line222{
-    transform: translate(0, -9px);
-}
-
-#main{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #fefefe;
-}
-
-#foot{
-    width: 100%;
-    height: 80px;
-    position: absolute;
-    bottom: 0;
+    height: 40px;
+    padding-top: 10px;
+    top: 0;
     left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 2px solid black;
-    font-size: larger;
-}
-
-.add input[type="text"]{
-    width: 80%;
-}
-
-.cancel{
-    width: 45px;
-    height: 45px;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-#burger, #burg{
-    height: 100px;
-    width: 100px;
-    position: absolute;
-    right: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-#burg{
-    top: 10px;
-}
-
-#burger:active, .cancel:active, #burg:active{
-    border: 1px solid black;
-}
-
-#burger div, .cancel div, #notifycancel div, #burg div{
-    width: inherit;
-    height: 6px;
-    background-color: black;
-    transition: 840ms;
-}
-
-.cancel #line1111, #line2222{
-    margin-bottom: 0;
-    height: 3px;
-}
-
-.cancel #line1111{
-    transform: rotate(-45deg) translate(-22px, 2px);
-}
-
-.cancel #line2222{
-    transform: rotate(45deg) translate(-2px, 22px);
-}
-
-#menu{
-    position: fixed;
-    top: 110px;
-    background: #fefefe;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: stretch;
-    justify-content: space-evenly;
-    font-size: 60px;
-    transition: 840ms;
-}
-
-#legal, #social{
-    margin-left: 20px;
-}
-
-#legal a{
-    height: 150px;
-}
-
-#social{
-    border-bottom: 2px solid black;
-}
-
-#menu a{
-    text-decoration: none;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    width: 90%;
-}
-
-.menu1{
-    opacity: 0;
-    height: 0%;
-    width: 0%;
-}
-.menu2{
-    opacity: 100%;
-    height: 94%;
-    width: 100%;
-}
-
-#burger .line11, #burg .line11{
-    transform: rotate(-45deg) translate(-5px, 22px);
-}
-#burger .line21, #burg .line21{
-    opacity: 0;
-}
-#burger .line31, #burg .line31{
-    transform: rotate(45deg) translate(-5px, -22px);
-}
-
-#notifycancel .line11{
-    transform: rotate(-45deg) translate(-5px, 10px);
-}
-
-#notifycancel .line31{
-    transform: rotate(45deg) translate(-5px, -10px);
-}
-
-.social{
-    height: 100px;
-    width: 100px;
-}
-
-#youtube{
-    background: url('img/youtube_black.png') no-repeat;
-    background-position: center;
-    background-size: contain;
-}
-
-#twitter{
-    background: url('img/twitter_black.png') no-repeat;
-    background-position: center;
-    background-size: contain;
-    border-radius: 100px;
-}
-
-#gmail{
-    background: url('img/mail.png') no-repeat;
-    background-position: center;
-    background-size: contain;
+    /*border-bottom: 2px solid black;*/
 }
 
 #logo{
-    display: flex;
+    background: url("./img/logo.svg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    width : 120px;
+    height: inherit;
+    margin-left: 20px;
 }
 
-.logochar{
-    font-family: bickley_scriptplain;
-    font-size: 150px;
-}
+/*#main #logo{
+    width : 200px;
+    height: 70px;
+}*/
 
-#search, #mainsearch{
-    width: 100%;
+#setbtn{
     display: flex;
-    flex-direction: column;
+    width: 20%;
+    height: inherit;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
-#mainsearch{
-    width: 80%;
-    margin-top: 10px;
+.tinybtnsback, .tinybtns{
+    border-radius: 13px;
+}
+
+.tinybtnsback{
+    width: 20px;
+    height: 20px;
+    background: #fefefe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tinybtns{
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--secondary);
+}
+
+.tinybtns:active{
+    border: 1px solid #b342ff;
+}
+
+#home{
+    background: url("./img/home.svg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#settings{
+    background: url("./img/settings.svg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/*#theme{
+    background: url("./img/sun.png") no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}*/
+
+#foot{
+    height: 20px;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+}
+
+/*
+    End of Navbar and Footbar Css code
+
+    Under Global Css, css code for searchbar
+*/
+
+#searchform, #searcharea, #searchbar{
+    display: flex;
+    align-items: center;
+}
+
+#searchform, #searcharea{
+    margin: 0;
+    justify-content: center;
+}
+
+#searchform{
+    width: 50%;
+    height: 100px;
+    position: relative;
+}
+
+#searcharea{
+    width: 100%;
+    height: 60px;
+    flex-direction: column;
 }
 
 #searchbar{
-    display: flex;
-    align-items: center;
+    width: 100%;
+    height: 60px;
     justify-content: space-around;
+    border-radius: 10px;
+    background: #fefefe;
     box-shadow: 0px 0px 0px rgba(255, 255, 255, 1), 
     4px 4px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 80px;
-}
-
-#searchbtn{
-    background: none;
-    width: 100px;
-    height: inherit;
-    box-shadow: 0px 0px 0px rgba(255, 255, 255, 1), 
-    4px 4px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 50px;
-    outline: none;
-}
-
-#searchbtn:active{
-    box-shadow: inset 0px 0px 0px rgba(255, 255, 255, 1), 
-    inset 4px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-#searchbtn img{
-    height: inherit;
-    width: inherit;
-}
-
-#search input[type="text"], #mainsearch input[type="text"]{
-    background: none;
-    width: 800px;
-    height: 110px;
-    font-size: 60px;
-    font-weight: lighter;
-    text-align: center;
-    border: none;
-    outline: none;
-    margin-bottom: 0;
-}
-
-#mainsearch input[type="text"]{
-    width: 70%;
 }
 
 #searchbar:focus{
@@ -335,93 +197,88 @@ html, body{
     inset 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-#search ul{
-    list-style: none;
+#searchbar input[type="text"], #searchbtn{
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
 }
 
-#mainsearch .unorder, #mainsearch .order{
-    display: flex;
-    padding: 0 0 0 0;
-    width: 30%;
-    height: 60px;
-    align-items: center;
-    justify-content: space-around;
+#searchbar input[type="text"]{
+    width: 80%;
+    height: inherit;
+    border: none;
+    font-size: 20px;
+    font-weight: lighter;
+    text-align: center;
 }
 
-#mainsearch .order{
-    width: 50%;
-}
-
-#search ul li, #mainsearch ul li{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 200px;
-}
-
-#search ul li h3, #mainsearch ul li h3{
-    font-size: xx-large;
-}
-
-#search ul li input[type="checkbox"], #mainsearch ul li input[type="checkbox"]{
+#searchbtn{
     width: 50px;
     height: 50px;
-}
-
-#policy{
-    width: 90%;
-    height: 1000px;
-    font-size: xx-large;
-}
-
-.admininfo{
-    width: 80%;
-    height: 30%;
+    border-radius: 50px;
+    background: url("./img/search.svg") no-repeat;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
     box-shadow: 0px 0px 0px rgba(255, 255, 255, 1), 
     4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#searchbtn:active{
+    box-shadow: inset 0px 0px 0px rgba(255, 255, 255, 1), 
+    inset 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/*
+    End of searchBar Css code
+
+    Main page specific css code
+*/
+
+#mainsearchform{
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    width: 60%;
+}
+
+.unorder{
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    width: 100%;
+    height: 30px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-around;
-    font-family: bickley_scriptplain;
-    font-size: 60px;
-    margin-bottom: 60px;
-    margin-top: 60px;
-}
-
-#analytics *{
-    margin-left: 40px;
-}
-
-#sitepolicy textarea, #sitenotification textarea, #siteads textarea{
-    width: 98%;
-    outline: none;
-    border-bottom: 2px solid black;
-    height: 80px;
-    font-size: medium;
-    resize: none;
-    border: 1px solid black;
-}
-
-#sitepolicy #privacy, #sitenotification #privacy, #siteads #privacy{
-    height: 400px;
-}
-
-#sitepolicy input[type="checkbox"], #sitenotification input[type="checkbox"], #siteads input[type="checkbox"]{
-    width: 40px;
-    height: 40px;
-}
-
-#sitepolicy *, #sitenotification *, #siteads *{
-    margin-bottom: 40px;
-}
-
-#socialmedia{
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
+
+.order{
+    width: 70px;
+    height: inherit;
+    border-bottom: 1px solid var(--secondary);
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.order:hover{
+    color: #9b00ff;
+    border-bottom: 1px solid #9b00ff;
+}
+
+.order:active{
+    color: #b342ff;
+    border-bottom: 1px solid #b342ff;
+}
+
+/*
+    End of main page specific code
+*/
 
 .btn{
     background: none;
@@ -445,103 +302,6 @@ html, body{
 .btn:active{
     box-shadow: inset 0px 0px 0px rgba(255, 255, 255, 1), 
     inset 4px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-#authentication input[type="password"], input[type="text"]{
-    width: 94%;
-    height: 90px;
-    text-align: center;
-    background: none;
-    outline: none;
-    font-size: xx-large;
-    margin-bottom: 50px;
-    border: 1px solid black;
-}
-
-#authentication{
-    align-items: center;
-}
-
-#input{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-#linkandpass{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-#piechart{
-    border-radius: 50%;
-    border: 1px solid black;
-    height: 300px;
-    width: 300px;
-    margin-top: 50px;
-    margin-bottom: 80px;
-}
-
-#piebtn, #loadtext{
-    font-size: 60px;
-    text-align: center;
-}
-
-#svisitors{
-    color: rgb(0, 136, 136);
-}
-
-#mvisitors{
-    color: rgb(0, 133, 0);
-}
-
-#pvisitors{
-    color: rgb(167, 0, 0);
-}
-
-#notification{
-    position: absolute;
-    bottom: 80px;
-    margin: 0 0 0 0;
-    width: 99%;
-    height: 20%;
-    border: 2px solid black;
-}
-#notification div{
-    margin-left: 15px;
-}
-#notification #notify{
-    width: 90%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 60px;
-}
-#notification #notify p{
-    margin: 0 0 0 0;
-}
-#notification #notify #notifycancel{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-#notification #notify #notifycancel:active{
-    border: 1px solid black;
-}
-#notification #notifyinfo{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
-    width: 94%;
-    height: 200px;
 }
 
 #models, #modelcon{
@@ -594,17 +354,8 @@ html, body{
     width: 100%;
     border-bottom: 2px solid black;
 }
-
-#loadimg {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
   
-@keyframes spin {
+/*@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
@@ -866,4 +617,4 @@ html, body{
         animation: spin 2s linear infinite;
         margin-bottom: 20px;
     }
-}
+}*/
