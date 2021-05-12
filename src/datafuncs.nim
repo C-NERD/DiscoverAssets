@@ -11,7 +11,6 @@ type
         dimension* : string
         website* : string
         icon* : string
-        icon_tag* : string
         asset_class* : string
         asset_tag* : string
         name_class* : string

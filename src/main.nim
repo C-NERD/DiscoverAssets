@@ -27,16 +27,13 @@ window.addEventListener("scroll", proc (e : Event) {.closure.} =
 )]#
 
 
-proc getKeyword() : cstring =
-    result = ""
-
 proc home(): VNode =
     result = buildHtml(main(id = "canvas")):
         background()
 
         span(id = "content"):
             navBar()
-            searchBar(getKeyword(), false)
+            searchBar(readCookies("query"), false)
 
             span(id = "container")
 

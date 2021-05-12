@@ -1,12 +1,12 @@
 # Package
 
-version       = "0.1.0"
-author        = "C_nerd"
-description   = "Search engine to help find free 2D and 3D assets on the web"
+version       = "0.2.0"
+author        = "cnerd"
+description   = "Search Engine for free game and animation assets"
 license       = "MIT"
 srcDir        = "src"
-installExt    = @["nim"]
 bin           = @["discoverassets"]
+binDir        = "bin"
 
 backend       = "cc"
 
@@ -35,8 +35,8 @@ proc moveExe() =
         mvFile "src/discoverassets.exe", "discoverassets.exe"
 
 task database, "compiles and runs the code to create a new database":
-    exec "nim c -r src/discoverassetspkg/database.nim"
-    rmFile "src/discoverassetspkg/database"
+    exec "nim c -r src/database.nim"
+    rmFile "src/database"
 
 task make, "compiles with thread":
     exec "nim c -d:ssl --threads:on src/discoverassets.nim"
@@ -47,16 +47,16 @@ task makerelease, "compiles a release version of the code":
     moveExe()
     
 task settings, "compiles code for the settings page to js":
-    exec "nim js src/discoverassetspkg/settings.nim"
-    mvFile "src/discoverassetspkg/settings.js", "public/frontend/settings.js"
+    exec "nim js src/settings.nim"
+    mvFile "src/settings.js", "public/frontend/settings.js"
     
 task home, "compiles code for the home page to js":
-    exec "nim js src/discoverassetspkg/home.nim"
-    mvFile "src/discoverassetspkg/home.js", "public/frontend/home.js"
+    exec "nim js src/home.nim"
+    mvFile "src/home.js", "public/frontend/home.js"
     
 task main, "compiles code for the main page to js":
-    exec "nim js src/discoverassetspkg/main.nim"
-    mvFile "src/discoverassetspkg/main.js", "public/frontend/main.js"
+    exec "nim js src/main.nim"
+    mvFile "src/main.js", "public/frontend/main.js"
     
 task standalone, "compiles a standalone deployable version of the code into a bin dir on the projects root dir":
     exec "nimble makerelease"

@@ -1,4 +1,42 @@
-import karax / [karax, karaxdsl, vdom, kdom]
+import karax / [karax, karaxdsl, vdom, kdom], asyncjs
+from karax / kajax import ajaxPost
+from json import parseJson, JsonNode
+from strutils import split
+
+
+proc readCookies*(keyword : string) : string =
+    let cookies = $document.cookie
+
+    for cookie in cookies.split(";"):
+        let splitcookie = cookie.split("=")
+
+        if splitcookie[0] == keyword:
+            return splitcookie[1]
+
+proc callApi*(url : string) : Future[JsonNode] =
+    let 
+        url : cstring = url
+
+    var 
+        headers : seq[(cstring, cstring)]
+        data : cstring
+        promise = newPromise() do (resolve : proc(response : JsonNode)):
+            ajaxPost(url, headers, data, proc (status : int, resp : cstring) =
+                    if status == 200:
+                        let jsonresp = parseJson($resp)
+                        resolve(jsonresp)
+            )
+
+    return promise
+
+
+proc clearDecendants*(id : string) =
+    let element = getElementById(id)
+    let children = element.children
+
+    for child in children:
+        element.removeChild(child)
+
 
 proc background*() : VNode =
     result = buildHtml(span(id = "background")):
@@ -8,15 +46,6 @@ proc background*() : VNode =
 
 
 proc navBar*() : VNode =
-    proc changeTheme(ev : Event, n : VNode) {.closure.} =
-        let html = document.getElementsByTagName("html")
-        
-        if html[0].style.background == "rgb(151, 160, 162)":
-            html[0].style.background = "rgb(254 254 254)"
-
-        else:
-            html[0].style.background = "rgb(151 160 162)"
-
     result = buildHtml(nav(id = "nav")):
 
             tdiv(id = "logo")
