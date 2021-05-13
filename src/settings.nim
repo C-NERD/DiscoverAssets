@@ -18,7 +18,7 @@ proc addSite() : VNode =
         duos("Name")
         duos("Img")
         duos("AssetLink")
-        tdiv(id = "submitcon"):
+        tdiv(class = "submitcon"):
             input(Type = "submit", value = "+")
 
 proc updateSite(api : Api) : VNode =
@@ -38,8 +38,11 @@ proc updateSite(api : Api) : VNode =
         duos("Name", api.name_class, api.name_tag)
         duos("Img", api.img_class, api.img_tag)
         duos("AssetLink", api.assetlink_class, api.assetlink_tag)
-        tdiv(id = "submitcon"):
-            input(Type = "submit", value = "+")
+
+        tdiv(class = "submitcon"):
+            input(Type = "submit", value = "update")
+            input(Type = "submit", value = "x", formaction = "/deletesite", formenctype = "multipart/form-data", formmethod = "POST")
+
 
 proc menuPanel() : VNode =
     proc addsite(ev : Event, n : VNode) {.closure.} =

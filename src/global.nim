@@ -13,6 +13,10 @@ proc readCookies*(keyword : string) : string =
         if splitcookie[0] == keyword:
             return splitcookie[1]
 
+proc toCstr*(str : string) : cstring =
+    let str : cstring = str
+    return str
+
 proc callApi*(url : string) : Future[JsonNode] =
     let 
         url : cstring = url

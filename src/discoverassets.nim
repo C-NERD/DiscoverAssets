@@ -1,23 +1,23 @@
-# This is just an example to get you started. A typical hybrid package
-# uses this file as the main entry point of the application.
-
 import jester, asyncdispatch, datafuncs, database
 from db_sqlite import open, close
 from json import `%`, `$`
-#from httpclient import newHttpClient, getContent
+from httpclient import newAsyncHttpClient, getContent
 include "views.tmpl"
 
-#[proc getinfo(name, query, num : string, url : tuple[d3 : URL, d2 : URL]) : Future[string] {.async.} =
+proc getinfo(data : Proxy) : Future[string] {.async.} =
     try:
-        var client = newHttpClient()
-        var allurl = url.d3.info.concat(url.d2.info)
+        let
+            headerinfo = @[
+                (key : data.keyword_tag, val : data.keyword),
+                (key : data.page_tag, val : data.page)
+                ]
+            header = newHttpHeaders(headerinfo)
+            client = newAsyncHttpClient(headers = header)
 
-        var link = allurl.filterIt(it.name == name)
-    
-        result = client.getContent(link[0].url.format([query, num]))
-        echo now().utc, "   got data from third party"
+        result = await client.getContent(data.url)
+
     except:
-        result = ""]#
+        discard
 
 
 routes:
@@ -41,20 +41,106 @@ routes:
         var fluke : Site
         resp frontend("main", "../", fluke)
 
-    #[get "/search/@query/@num":
-        try:
-            let data = waitFor getinfo(@"name", @"query", @"num", geturl())
-            resp data
-        except:
-            let data = ""
-            resp data
-        redirect("/search/@query")]#
+    post "/search/@query":
+        let
+            keyword_tag = request.formData.getOrDefault("keyword_tag").body
+            keyword = request.formData.getOrDefault("keyword").body
+            page_tag = request.formData.getOrDefault("page_tag").body
+            page = request.formData.getOrDefault("page").body
+            url = request.formData.getOrDefault("url").body
+
+            data : Proxy = Proxy(
+                keyword_tag : keyword_tag,
+                keyword : keyword,
+                page_tag : page_tag,
+                page : page,
+                url : url
+            )
+
+        resp waitFor getinfo(data)
 
     post "/sites":
         let db  = open("database.db", "", "", "")
         let jsonresp = $(% db.getSearch())
+        db.close()
 
         resp jsonresp
+
+    post "/addsite":
+        let 
+            db  = open("database.db", "", "", "")
+
+            website = request.formData.getOrDefault("website").body
+            icon = request.formData.getOrDefault("icon").body
+            link = request.formData.getOrDefault("link").body
+            keyword = request.formData.getOrDefault("keyword").body
+            page = request.formData.getOrDefault("page").body
+            asset_class = request.formData.getOrDefault("Assetclass").body
+            asset_tag = request.formData.getOrDefault("Assettag").body
+            name_class = request.formData.getOrDefault("Nameclass").body
+            name_tag = request.formData.getOrDefault("Nametag").body
+            img_class = request.formData.getOrDefault("Imgclass").body
+            img_tag = request.formData.getOrDefault("Imgtag").body
+            assetlink_class = request.formData.getOrDefault("AssetLinkclass").body
+            assetlink_tag = request.formData.getOrDefault("AssetLinktag").body
+
+            api : Api = Api(website : website, icon : icon, link : link,
+            keyword_tag : keyword, page_tag : page, asset_class : asset_class,
+            asset_tag : asset_tag, name_class : name_class, name_tag : name_tag,
+            img_class : img_class, img_tag : img_tag, assetlink_class : assetlink_class,
+            assetlink_tag : assetlink_tag)
+        
+        db.addApi(api)
+        db.close()
+        redirect("/settings")
+
+        #[var status : bool
+
+        try:
+            db.addApi(api)
+            status = true
+            resp $(% status)
+
+        except:
+            status = false
+            resp $(% status)]#
+
+    post "/updatesite":
+        let 
+            db  = open("database.db", "", "", "")
+
+            website = request.formData.getOrDefault("website").body
+            icon = request.formData.getOrDefault("icon").body
+            link = request.formData.getOrDefault("link").body
+            keyword = request.formData.getOrDefault("keyword").body
+            page = request.formData.getOrDefault("page").body
+            asset_class = request.formData.getOrDefault("Assetclass").body
+            asset_tag = request.formData.getOrDefault("Assettag").body
+            name_class = request.formData.getOrDefault("Nameclass").body
+            name_tag = request.formData.getOrDefault("Nametag").body
+            img_class = request.formData.getOrDefault("Imgclass").body
+            img_tag = request.formData.getOrDefault("Imgtag").body
+            assetlink_class = request.formData.getOrDefault("AssetLinkclass").body
+            assetlink_tag = request.formData.getOrDefault("AssetLinktag").body
+
+            api : Api = Api(website : website, icon : icon, link : link,
+            keyword_tag : keyword, page_tag : page, asset_class : asset_class,
+            asset_tag : asset_tag, name_class : name_class, name_tag : name_tag,
+            img_class : img_class, img_tag : img_tag, assetlink_class : assetlink_class,
+            assetlink_tag : assetlink_tag)
+        
+        db.updateApi(api)
+        db.close()
+        redirect("/settings")
+
+    post "/deletesite":
+        let 
+            db  = open("database.db", "", "", "")
+            website = request.formData.getOrDefault("website").body
+
+        db.deleteApi(website)
+        db.close()
+        redirect("/settings")
 
     error {Http404..Http503}:
         var fluke : Site

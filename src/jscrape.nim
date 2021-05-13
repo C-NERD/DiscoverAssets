@@ -9,9 +9,6 @@ proc parseSite(html : string, api : Api) : seq[Data] =
     var html = parseHtml(html)
     discard
 
-proc toCstr(data : string) : cstring =
-    var data : cstring = data
-    result = data
 
 proc comlink(tail, head : string) : string =
     if tail.contains("https") or tail.contains(head):
