@@ -1,19 +1,20 @@
 import jester, asyncdispatch, datafuncs, database
 from db_sqlite import open, close
 from json import `%`, `$`
-from httpclient import newAsyncHttpClient, getContent
+from httpclient import newAsyncHttpClient, getContent, newMultipartData, `[]=`
 include "views.tmpl"
 
 proc getinfo(data : Proxy) : Future[string] {.async.} =
     try:
-        let
-            headerinfo = @[
-                (key : data.keyword_tag, val : data.keyword),
-                (key : data.page_tag, val : data.page)
-                ]
-            header = newHttpHeaders(headerinfo)
-            client = newAsyncHttpClient(headers = header)
+        #[var
+            multipart = newMultipartData()
 
+        multipart[data.keyword_tag] = data.keyword
+        multipart[data.page_tag] = data.page]#
+
+        let
+            client = newAsyncHttpClient()
+        
         result = await client.getContent(data.url)
 
     except:

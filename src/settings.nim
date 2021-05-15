@@ -1,5 +1,5 @@
 import karax / [karax, karaxdsl, vdom, kdom], asyncjs, global, datafuncs
-from json import `$`, to
+from json import to
 
 
 proc addSite() : VNode =
@@ -32,8 +32,8 @@ proc updateSite(api : Api) : VNode =
         input(Type = "text", placeholder = "Website's name", name = "website", value = api.website)
         input(Type = "text", placeholder = "Website's icon link", name = "icon", value = api.icon)
         input(Type = "text", placeholder = "Website's link", name = "link", value = api.link)
-        input(Type = "text", placeholder = "Keyword", name = "keyword")
-        input(Type = "text", placeholder = "Page Number", name = "page")
+        input(Type = "text", placeholder = "Keyword", name = "keyword", value = api.keyword_tag)
+        input(Type = "text", placeholder = "Page Number", name = "page", value = api.page_tag)
         duos("Asset", api.asset_class, api.asset_tag)
         duos("Name", api.name_class, api.name_tag)
         duos("Img", api.img_class, api.img_tag)

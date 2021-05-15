@@ -1,33 +1,44 @@
-import karax / [karax, karaxdsl, vdom, kdom]
-import global
-#import jscrape
+import karax / [karax, karaxdsl, vdom, kdom], global, datafuncs, asyncjs
+from json import to, `$`
+from strutils import split, format
 
-#[let
-    url = window.location.href
-    height : int = window.innerHeight
 
-window.addEventListener("scroll", proc (e : Event) {.closure.} =
-    var 
-        model = getElementById("models")
-        top = document.documentElement.scrollTop
-        limit = document.documentElement.scrollHeight - height
-    
-    if top > limit - (height/4).toInt:
-        discard
-        #[if pos < count and model.children != @[] and condition == true:
-            pos.inc
-            condition = false
-            getdata(geturl(), $url, $getkeyword(), pos)
+proc getKeyword() : string =
+    result = ($window.location.href).split('/')[^1]
 
-        elif pos > count or pos == count: 
-            var modelcon = getElementById("modelcon")
-            var child = getElementById("loadimg")
-            modelcon.removeChild(child)]#
-,true
-)]#
 
+proc getInfo(data : Site, page : string) {.async.} =
+
+    for api in data.apis:
+        let
+            keyword = getKeyword()
+            page = page
+            form = @[
+                (keys : "url", values : $(api.link.format([keyword, page])))
+            ]
+
+            info = await callApi($window.location.href, form)
+
+        echo info
+
+
+proc getData() {.async.} =
+    let
+        info = await callApi($window.location.href & "/../../sites")
+        site = info.to(Site)
+
+    discard site.getInfo($1)
+
+
+discard setTimeout(
+    proc() {.closure.} =
+        discard getData()
+    ,
+    0
+)
 
 proc home(): VNode =
+
     result = buildHtml(main(id = "canvas")):
         background()
 
