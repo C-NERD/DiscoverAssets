@@ -17,7 +17,7 @@ proc getInfo(data : Site, page : string) {.async.} =
                 (keys : "url", values : $(api.link.format([keyword, page])))
             ]
 
-            info = await callApi($window.location.href, form)
+            info = await callBackend($window.location.href, form)
 
         echo info
 

@@ -43,7 +43,7 @@ task make, "compiles with thread":
     moveExe()
     
 task makerelease, "compiles a release version of the code":
-    exec "nim c -d:ssl -d:release --gc:orc --threads:on src/discoverassets.nim"
+    exec "nim c -d:ssl -d:release -d:danger --gc:orc --threads:on src/discoverassets.nim"
     moveExe()
     
 task settings, "compiles code for the settings page to js":
@@ -60,6 +60,7 @@ task main, "compiles code for the main page to js":
     
 task standalone, "compiles a standalone deployable version of the code into a bin dir on the projects root dir":
     exec "nimble makerelease"
+    exec "nimble database"
     exec "nimble settings"
     exec "nimble home"
     exec "nimble main"
@@ -69,3 +70,5 @@ task standalone, "compiles a standalone deployable version of the code into a bi
         moveToBin()
     else:
         moveToBin()
+
+    rmFile "database.db"

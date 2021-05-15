@@ -14,9 +14,9 @@ proc readCookies*(keyword : string) : string =
         if splitcookie[0] == keyword:
             return splitcookie[1]
 
-proc toCstr*[T](str : T) : cstring =
-    let str : cstring = $str
-    return str
+proc toCstr*[T](item : T) : cstring =
+    let item : cstring = $item
+    return item
 
 proc callApi*(url : string, useget : bool = false) : Future[JsonNode] =
     let 
@@ -46,7 +46,7 @@ proc callApi*(url : string, useget : bool = false) : Future[JsonNode] =
 
     return promise
 
-proc callApi*(url : string, form : seq[tuple[keys, values : string]]) : Future[string] =
+proc callBackend*(url : string, form : seq[tuple[keys, values : string]]) : Future[string] =
 
     var
         url : cstring = url
