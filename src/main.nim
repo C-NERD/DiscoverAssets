@@ -22,17 +22,17 @@ proc getInfo(data : Site, page : string) {.async.} =
         echo info
 
 
-proc getData() {.async.} =
+proc getData(page : string) {.async.} =
     let
         info = await callApi($window.location.href & "/../../sites")
         site = info.to(Site)
 
-    discard site.getInfo($1)
+    discard site.getInfo(page)
 
 
 discard setTimeout(
     proc() {.closure.} =
-        discard getData()
+        discard getData($1)
     ,
     0
 )

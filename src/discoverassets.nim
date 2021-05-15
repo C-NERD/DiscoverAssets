@@ -1,5 +1,5 @@
 import jester, asyncdispatch, datafuncs, database
-from db_sqlite import open, close
+#from db_sqlite import open, close
 from json import `%`, `$`
 from httpclient import newAsyncHttpClient, getContent, newMultipartData, `[]=`
 include "views.tmpl"
@@ -61,15 +61,15 @@ routes:
         resp waitFor getinfo(data)
 
     post "/sites":
-        let db  = open("database.db", "", "", "")
-        let jsonresp = $(% db.getSearch())
-        db.close()
+        #let db  = open("database.db", "", "", "")
+        let jsonresp = $(% getSearch())
+        #db.close()
 
         resp jsonresp
 
     post "/addsite":
         let 
-            db  = open("database.db", "", "", "")
+            #db  = open("database.db", "", "", "")
 
             website = request.formData.getOrDefault("website").body
             icon = request.formData.getOrDefault("icon").body
@@ -91,8 +91,8 @@ routes:
             img_class : img_class, img_tag : img_tag, assetlink_class : assetlink_class,
             assetlink_tag : assetlink_tag)
         
-        db.addApi(api)
-        db.close()
+        addApi(api)
+        #db.close()
         redirect("/settings")
 
         #[var status : bool
@@ -108,7 +108,7 @@ routes:
 
     post "/updatesite":
         let 
-            db  = open("database.db", "", "", "")
+            #db  = open("database.db", "", "", "")
 
             website = request.formData.getOrDefault("website").body
             icon = request.formData.getOrDefault("icon").body
@@ -130,17 +130,17 @@ routes:
             img_class : img_class, img_tag : img_tag, assetlink_class : assetlink_class,
             assetlink_tag : assetlink_tag)
         
-        db.updateApi(api)
-        db.close()
+        updateApi(api)
+        #db.close()
         redirect("/settings")
 
     post "/deletesite":
         let 
-            db  = open("database.db", "", "", "")
+            #db  = open("database.db", "", "", "")
             website = request.formData.getOrDefault("website").body
 
-        db.deleteApi(website)
-        db.close()
+        deleteApi(website)
+        #db.close()
         redirect("/settings")
 
     error {Http404..Http503}:

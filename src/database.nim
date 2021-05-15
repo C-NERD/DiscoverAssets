@@ -2,7 +2,7 @@ import db_sqlite, datafuncs
 
 var db  = open("database.db", "", "", "")
 
-proc addApi*(db : DbConn, api : Api) =
+proc addApi*(api : Api) =
     discard db.insertID(sql"""
     INSERT INTO api (siteid, link, keyword_tag, page_tag, dimension, website, icon, 
     asset_class, asset_tag, name_class, name_tag, img_class, img_tag, assetlink_class, 
@@ -11,7 +11,7 @@ proc addApi*(db : DbConn, api : Api) =
     api.asset_class, api.asset_tag, api.name_class, api.name_tag, api.img_class, api.img_tag, 
     api.assetlink_class, api.assetlink_tag)
 
-proc updateApi*(db : DbConn, api : Api) =
+proc updateApi*(api : Api) =
     db.exec(sql"""
     UPDATE api SET siteid = ?, link = ?, keyword_tag = ?, page_tag = ?, dimension = ?, 
     website = ?, icon = ?, asset_class = ?, asset_tag = ?, name_class = ?, name_tag = ?, 
@@ -20,10 +20,10 @@ proc updateApi*(db : DbConn, api : Api) =
     api.asset_class, api.asset_tag, api.name_class, api.name_tag, api.img_class, api.img_tag, 
     api.assetlink_class, api.assetlink_tag, api.website)
 
-proc deleteApi*(db : DbConn, website : string) =
+proc deleteApi*(website : string) =
     db.exec(sql"DELETE FROM api WHERE website = ?", website)
 
-proc getSearch*(db : DbConn) : Site =
+proc getSearch*() : Site =
 
     for api in db.fastRows(sql"SELECT * FROM api WHERE siteid = 1;"):
         var info : Api
@@ -120,7 +120,7 @@ proc populate() =
         ]
 
     for site in sites:
-        db.addApi(site)
+        addApi(site)
 
 when isMainModule:
     newdatabase()
