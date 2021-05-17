@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DiscoverAssets
 Search engine for free 3D and 2D assets
 
