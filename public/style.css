@@ -21,6 +21,7 @@ html, body, #ROOT, #main, #background, #content{
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: hidden;
 }
 
 html{
@@ -274,6 +275,80 @@ html{
 .order:active{
     color: #b342ff;
     border-bottom: 1px solid #b342ff;
+}
+
+#container{
+    overflow-y: scroll;
+    position: absolute;
+    width: 90%;
+    bottom: 20px;
+    height: 68%;
+}
+
+#container a{
+    text-decoration: none;
+}
+
+#container .asset{
+    width: 300px;
+    min-height: 320px;
+    display: flex;
+    float: left;
+    margin: 20px 30px 20px 30px;
+    padding: 10px;
+    align-items: flex-start;
+    color: #202020;
+    background: #fefefeca;
+    box-shadow: 0px 0px 0px rgb(255, 255, 255), 
+    4px 4px 10px rgb(0, 0, 0, 0.3);
+}
+
+#container .asset .innerassets{
+    width: 100%;
+    /*min-height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#container .asset .innerassets img{
+    width: 100%;
+    border-radius: 8px;
+}
+
+/*#container .asset .innerassets .namenicon p{
+    color: var(--secondary);
+}*/
+
+#container .asset .innerassets .namenicon{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#container .asset .innerassets .namenicon div{
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
+
+#container .asset .innerassets .namenicon #nameicon{
+    background: url("./img/modelicon.png") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#container .asset .innerassets .namenicon #websiteicon{
+    background: url("./img/websiteicon.png") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#container .asset .innerassets .namenicon #dimensionicon{
+    background: url("./img/dimensionicon.png") no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 /*

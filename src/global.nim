@@ -1,4 +1,4 @@
-import karax / [karaxdsl, vdom, kdom], asyncjs
+import karax / [karaxdsl, vdom, kdom], asyncjs, datafuncs
 from karax / kajax import ajaxPost, ajaxGet, newFormData, append
 from jsffi import to
 from json import parseJson, JsonNode
@@ -67,6 +67,30 @@ proc callBackend*(url : string, form : seq[tuple[keys, values : string]]) : Futu
             )
 
     return promise
+
+proc makeAssetNode*(data : Data) : VNode =
+    proc background() : VNode {.closure.} =
+        result = buildHtml(span(class = "assetbackground")):
+            tdiv(class = "cresentbox")
+            tdiv(class = "fullbox")
+
+    proc namenicon(name, value : string) : VNode {.closure.} =
+        result = buildHtml(tdiv(class = "namenicon")):
+            tdiv(id = name)
+            p:
+                text value
+
+    result = buildHtml(a(href = data.link)):
+        span(class = "asset"):
+            #background()
+
+            tdiv(class = "innerassets"):
+                img(src = data.img, class = "assetimg")
+                namenicon("nameicon", data.name)
+
+                namenicon("websiteicon", data.website)
+            
+                namenicon("dimensionicon", data.dimension)
 
 
 proc clearDecendants*(id : string) =

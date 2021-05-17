@@ -1,7 +1,7 @@
 # Package
 
 version       = "0.2.0"
-author        = "cnerd"
+author        = "C-NERD"
 description   = "Search Engine for free game and animation assets"
 license       = "MIT"
 srcDir        = "src"

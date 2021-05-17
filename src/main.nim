@@ -1,4 +1,4 @@
-import karax / [karax, karaxdsl, vdom, kdom], global, datafuncs, asyncjs
+import karax / [karax, karaxdsl, vdom, kdom], global, datafuncs, asyncjs, domparse
 from json import to, `$`
 from strutils import split, format
 
@@ -8,6 +8,8 @@ proc getKeyword() : string =
 
 
 proc getInfo(data : Site, page : string) {.async.} =
+    let
+        container = getElementById("container")
 
     for api in data.apis:
         let
@@ -19,8 +21,14 @@ proc getInfo(data : Site, page : string) {.async.} =
 
             info = await callBackend($window.location.href, form)
 
-        echo info
+        #echo info
+        for intel in parseSite(info, api):
+            echo intel
+            #try:
+            container.appendChild(makeAssetNode(intel).vnodeToDom())
 
+            #except:
+            #    continue
 
 proc getData(page : string) {.async.} =
     let
@@ -30,13 +38,6 @@ proc getData(page : string) {.async.} =
     discard site.getInfo(page)
 
 
-discard setTimeout(
-    proc() {.closure.} =
-        discard getData($1)
-    ,
-    0
-)
-
 proc home(): VNode =
 
     result = buildHtml(main(id = "canvas")):
@@ -44,7 +45,7 @@ proc home(): VNode =
 
         span(id = "content"):
             navBar()
-            searchBar(readCookies("query"), false)
+            searchBar(getKeyword(), false)
 
             span(id = "container")
 
@@ -52,3 +53,10 @@ proc home(): VNode =
 
 when isMainModule:
     setRenderer home
+
+    discard setTimeout(
+        proc() {.closure.} =
+            discard getData($1)
+        ,
+        500
+    )
