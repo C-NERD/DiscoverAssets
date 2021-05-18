@@ -82,10 +82,23 @@ proc newdatabase() =
 proc populate() =
     const sites : seq[Api]  =
         @[
-            Api(
+            #[Api(
                 link : "https://3dexport.com/free-search/keywords($1)?page=$2",
                 dimension : "3D",
-                website : "3dexport.com"
+                website : "3dexport.com",
+                asset_class : "group",
+                asset_tag : "li",
+                img_tag : "img",
+                assetlink_tag : "a",
+            ),]#
+            Api(
+                link : "https://www.blendswap.com/search?page=$2&keyword=$1",
+                dimension : "3D",
+                website : "blendswap.com",
+                asset_class : "card",
+                asset_tag : "div",
+                img_tag : "img",
+                assetlink_tag : "a",
             ),
             Api(
                 link : "https://clara.io/library?gameCheck=true&public=true&query=$1&page=$2&perPage=$3",
@@ -96,15 +109,6 @@ proc populate() =
                 img_tag : "img",
                 img_class : "thumb",
                 name_tag : "h3",
-                assetlink_tag : "a",
-            ),
-            Api(
-                link : "https://www.blendswap.com/search?page=$2&keyword=$1",
-                dimension : "3D",
-                website : "blendswap.com",
-                asset_class : "card",
-                asset_tag : "div",
-                img_tag : "img",
                 assetlink_tag : "a",
             ),
             Api(

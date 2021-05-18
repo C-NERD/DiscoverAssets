@@ -21,7 +21,7 @@ proc getInfo(data : Site, page : string) {.async.} =
 
             info = await callBackend($window.location.href, form)
 
-        #echo info
+        echo form
         for intel in parseSite(info, api):
             echo intel
             #try:
@@ -45,7 +45,7 @@ proc home(): VNode =
 
         span(id = "content"):
             navBar()
-            searchBar(getKeyword(), false)
+            searchBar($(getKeyword().toCstr.decodeURIComponent), false)
 
             span(id = "container")
 

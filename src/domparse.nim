@@ -61,4 +61,7 @@ proc parseSite*(html : string, api : Api) : seq[Data] =
             else:
                 asset.getName(data)
 
+            if api.assetlink_tag == api.asset_tag:
+                data.link = correctLink(api.website, asset.attr("href"))
+
             result.add(data)

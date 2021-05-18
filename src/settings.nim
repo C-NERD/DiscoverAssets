@@ -1,43 +1,48 @@
 import karax / [karax, karaxdsl, vdom, kdom], asyncjs, global, datafuncs
 from json import to
 
+proc siteForm(api : Api = Api()) : VNode =
+    proc duos(name, classvalue : string = "", tagvalue : string = "") : VNode {.closure.} =
+        result = buildHtml(tdiv(class = "duo")):
+            input(Type = "text", placeholder = name & " class", name = name & "class", value = classvalue)
+            input(Type = "text", placeholder = name & " tag", name = name & "tag", value = tagvalue)
+    
+    result = buildHtml(span()):
+        input(Type = "text", placeholder = "Website's name", name = "website", value = api.website)
+        #input(Type = "text", placeholder = "Website's icon link", name = "icon", value = api.icon)
+        input(Type = "text", placeholder = "Website's link", name = "link", value = api.link)
+        #input(Type = "text", placeholder = "Keyword", name = "keyword", value = api.keyword_tag)
+        #input(Type = "text", placeholder = "Page Number", name = "page", value = api.page_tag)
+        select(name = "dimension", value = api.dimension, placeholder = "dimensions"):
+            option(value = "3D"):
+                text "3D"
+
+            option(value = "2D"):
+                text "2D"
+
+        select(name = "search", placeholder = "manual search"):
+            option(value = "false"):
+                text "Disable Manual Search"
+
+            option(value = "true"):
+                text "Enable Manual Search"
+
+        duos("Asset", api.asset_class, api.asset_tag)
+        duos("Name", api.name_class, api.name_tag)
+        duos("Img", api.img_class, api.img_tag)
+        duos("AssetLink", api.assetlink_class, api.assetlink_tag)
 
 proc addSite() : VNode =
-    proc duos(name : string) : VNode {.closure.} =
-        result = buildHtml(tdiv(class = "duo")):
-            input(Type = "text", placeholder = name & " class", name = name & "class")
-            input(Type = "text", placeholder = name & " tag", name = name & "tag")
 
     result = buildHtml(form(action = "/addsite", Method = "POST", class = "addsite", enctype = "multipart/form-data")):
-        input(Type = "text", placeholder = "Website's name", name = "website")
-        input(Type = "text", placeholder = "Website's icon link", name = "icon")
-        input(Type = "text", placeholder = "Website's link", name = "link")
-        input(Type = "text", placeholder = "Keyword", name = "keyword")
-        input(Type = "text", placeholder = "Page Number", name = "page")
-        duos("Asset")
-        duos("Name")
-        duos("Img")
-        duos("AssetLink")
+        siteForm()
         tdiv(class = "submitcon"):
             input(Type = "submit", value = "+")
 
 proc updateSite(api : Api) : VNode =
 
-    proc duos(name, classvalue, tagvalue : string) : VNode {.closure.} =
-        result = buildHtml(tdiv(class = "duo")):
-            input(Type = "text", placeholder = name & " class", name = name & "class", value = classvalue)
-            input(Type = "text", placeholder = name & " tag", name = name & "tag", value = tagvalue)
-
     result = buildHtml(form(action = "/updatesite", Method = "POST", class = "addsite", enctype = "multipart/form-data")):
-        input(Type = "text", placeholder = "Website's name", name = "website", value = api.website)
-        input(Type = "text", placeholder = "Website's icon link", name = "icon", value = api.icon)
-        input(Type = "text", placeholder = "Website's link", name = "link", value = api.link)
-        input(Type = "text", placeholder = "Keyword", name = "keyword", value = api.keyword_tag)
-        input(Type = "text", placeholder = "Page Number", name = "page", value = api.page_tag)
-        duos("Asset", api.asset_class, api.asset_tag)
-        duos("Name", api.name_class, api.name_tag)
-        duos("Img", api.img_class, api.img_tag)
-        duos("AssetLink", api.assetlink_class, api.assetlink_tag)
+        siteForm(api)
 
         tdiv(class = "submitcon"):
             input(Type = "submit", value = "update")
