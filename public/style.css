@@ -280,7 +280,7 @@ html{
 #container{
     overflow-y: scroll;
     position: absolute;
-    width: 90%;
+    width: 98%;
     bottom: 20px;
     height: 68%;
 }
@@ -294,7 +294,7 @@ html{
     min-height: 320px;
     display: flex;
     float: left;
-    margin: 20px 30px 20px 30px;
+    margin: 20px 60px 20px 60px;
     padding: 10px;
     align-items: flex-start;
     color: #202020;

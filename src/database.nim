@@ -90,12 +90,22 @@ proc populate() =
             Api(
                 link : "https://clara.io/library?gameCheck=true&public=true&query=$1&page=$2&perPage=$3",
                 dimension : "3D",
-                website : "clara.io"
+                website : "clara.io",
+                asset_class : "thumbnail",
+                asset_tag : "a",
+                img_tag : "img",
+                img_class : "thumb",
+                name_tag : "h3",
+                assetlink_tag : "a",
             ),
             Api(
                 link : "https://www.blendswap.com/search?page=$2&keyword=$1",
                 dimension : "3D",
-                website : "blendswap.com"
+                website : "blendswap.com",
+                asset_class : "card",
+                asset_tag : "div",
+                img_tag : "img",
+                assetlink_tag : "a",
             ),
             Api(
                 link : "https://3dmodelhaven.com/models/?c=&s=$1",

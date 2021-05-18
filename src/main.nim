@@ -16,7 +16,7 @@ proc getInfo(data : Site, page : string) {.async.} =
             keyword = getKeyword()
             page = page
             form = @[
-                (keys : "url", values : $(api.link.format([keyword, page])))
+                (keys : "url", values : $(api.link.format([keyword, page, $50])))
             ]
 
             info = await callBackend($window.location.href, form)

@@ -24,6 +24,16 @@ By default this engine scrapes :
 
 #### ⚠⚠⚠ Make sure to read the *terms of usage* for these sites, for I nor this software is liable for actions performed by you on those sites via this software.
 
+# Compiling
+To compile for production simply open a terminal in the projects root directory and type
+
+```bash
+nimble standalone
+```
+
+for the code to successfully compile you need to have nimlang and it's dependencies installed
+on your local computer. Enjoy 👍👍
+
 # Contributing
 Check the issues section for problems you can fix, i'll make sure to update it regularly. Also if you have
 ideas on features to add, remove or improve on the project. Open an issue then make a PR.
